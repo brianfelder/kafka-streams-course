@@ -1,10 +1,21 @@
 #!/bin/bash
 
+######### Create Topics
+
+CURRENT_DIR=`pwd`
+
+cd $KAFKA_HOME
 # create input topic with two partitions
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic word-count-input
 
 # create output topic
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic word-count-output
+
+cd $CURRENT_DIR
+
+exit 0
+
+######## Other pieces
 
 # launch a Kafka consumer
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
@@ -29,3 +40,5 @@ java -jar <your jar here>.jar
 
 # list all topics that we have in Kafka (so we can observe the internal topics)
 bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+cd $CURRENT_DIR
